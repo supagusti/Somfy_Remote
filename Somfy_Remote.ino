@@ -18,10 +18,9 @@
     - you can also send a HEX number directly for any weird command you (0x9 for the sun and wind detector for instance)
 
 
-todo: 
-
+test: 
 -PROG, whem am entry exists to enable to prog more than one blind to an address.
--PROG, when an entry exists to enable program mode at blinds
+
 
 
 
@@ -35,7 +34,7 @@ todo:
 #define STOP 0x1
 #define BAS 0x4
 #define PROG 0x8
-#define DEBUG true
+#define DEBUG false
 
 long REMOTE = 0x000000;
 int EEPROM_ADDRESS = 0;
@@ -167,7 +166,7 @@ void loop()
     
         if (findInEEPROM(REMOTE) == true )
         {
-            if(RTScommand == "UP"  || RTScommand == "ON") 
+            if(RTScommand == "UP"  || RTScommand == "OFF") 
             {
                if (DEBUG){Serial.println("Moving Up");}
                BuildFrame(frame, HAUT );
@@ -177,7 +176,7 @@ void loop()
               if (DEBUG){Serial.println("Stop");}
               BuildFrame(frame, STOP);
             }
-            else if(RTScommand == "DOWN" || RTScommand == "OFF") 
+            else if(RTScommand == "DOWN" || RTScommand == "ON") 
             {
               if (DEBUG){Serial.println("Moving Down");}
               BuildFrame(frame, BAS);
@@ -251,6 +250,10 @@ void loop()
             BuildFrame(frame, PROG);
             RTSprint("OK");              
           }
+          else if(RTScommand == "PING") 
+          {
+            RTSprint("PONG");
+          } 
      
          else
          {
